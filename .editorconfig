@@ -1,0 +1,9 @@
+root=true
+
+[*]
+end_of_line = auto
+indent_size = 2
+
+[*.md]
+end_of_line = auto
+indent_size = 2
