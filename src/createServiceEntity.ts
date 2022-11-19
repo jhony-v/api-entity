@@ -21,10 +21,11 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
 
   for (let actionName in actions) {
     const action = actions[actionName];
+    const isActionFullPath = typeof action === "string";
     finalActions[actionName] = (params = undefined) => {
       const path = createPath({
+        path: isActionFullPath ? action : action.path,
         entity,
-        path: action.path,
         params,
         baseUrl,
       });
@@ -33,11 +34,11 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
         try {
           const buildAdapterCallback = adapter ? request : fetcher;
           const response = await buildAdapterCallback({
-            type: action.type,
+            type: isActionFullPath ? "get" : action.type,
             path,
             params,
           });
-          if (action.resolve) {
+          if (!isActionFullPath && action.resolve) {
             const resolver = action.resolve(response);
             resolve(resolver);
           }

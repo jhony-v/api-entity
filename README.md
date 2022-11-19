@@ -4,6 +4,8 @@ Create service entities according to your API agnostic to the framework you are 
 
 ## Usage
 
+Using axios as an adapter
+
 ```ts
 import axios from "axios";
 import { createServiceEntity } from "api-entity";
@@ -41,4 +43,22 @@ const posts = createServiceEntity({
 
 posts.all().then(console.log);
 posts.byId({ id: 1 }).then(console.log);
+```
+
+Using native requests and passing directly the path, It works with GET methods.
+
+```ts
+const posts = createServiceEntity({
+  baseUrl: "https://jsonplaceholder.typicode.com",
+  entity: "posts",
+  actions: {
+    all: "/",
+    byId: "/:id",
+    byIdComments: "/:id/comments",
+  },
+});
+
+posts.all().then(console.log);
+posts.byId({ id: 1 }).then(console.log);
+posts.byIdComments({ id: 2 }).then(console.log);
 ```
