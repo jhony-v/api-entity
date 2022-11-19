@@ -19,7 +19,7 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
   const finalActions = {} as EntityReturn<Actions>;
   const request = resolveAdapter(adapter);
 
-  for (let actionName in actions) {
+  for (const actionName in actions) {
     const action = actions[actionName];
     const isActionFullPath = typeof action === "string";
     finalActions[actionName] = (params = undefined) => {

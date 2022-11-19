@@ -1,7 +1,7 @@
 {
   "name": "api-entity",
   "version": "1.0.0",
-  "description": "",
+  "description": "Create service entities according to your API agnostic to the framework you are using",
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -32,12 +32,19 @@
     "entity",
     "typescript"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "jhony-v",
+    "url": "https://github.com/jhony-v"
+  },
+  "repository": {
+    "url": "https://github.com/jhony-v/api-entity"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1",
     "standard-version": "^9.5.0",
