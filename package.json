@@ -20,7 +20,7 @@
   "scripts": {
     "build": "pnpm unbuild",
     "lint": "eslint --ext .ts,.js,.mjs,.cjs .",
-    "prepack": "unbuild",
+    "prepack": "pnpm unbuild",
     "release": "pnpm lint && standard-version && git push --follow-tags && pnpm publish"
   },
   "keywords": [

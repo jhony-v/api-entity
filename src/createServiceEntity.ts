@@ -22,7 +22,13 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
   for (const actionName in actions) {
     const action = actions[actionName];
     const isActionFullPath = typeof action === "string";
-    finalActions[actionName] = (params = undefined) => {
+    finalActions[actionName] = async (params = undefined) => {
+      if (typeof action === "function") {
+        const filterActions = { ...finalActions };
+        delete filterActions[actionName];
+        return action({ actions: filterActions, params });
+      }
+
       const path = createPath({
         path: isActionFullPath ? action : action.path,
         entity,

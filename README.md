@@ -55,6 +55,14 @@ const posts = createServiceEntity({
     all: "/",
     byId: "/:id",
     byIdComments: "/:id/comments",
+    postComments: async ({ actions, params }) => {
+      const post = await actions.byId(params);
+      const comments = await actions.byIdComments(params);
+      return {
+        post,
+        comments,
+      };
+    },
   },
 });
 

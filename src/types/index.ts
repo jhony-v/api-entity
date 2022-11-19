@@ -1,5 +1,10 @@
 export type ActionType = "get" | "post" | "patch" | "put" | "delete";
 
+type ActionFunction<Params extends {} = {}, Response extends {} = {}, Actions = {}> = (context: {
+  actions: Actions;
+  params?: Params;
+}) => Promise<Response>;
+
 export type Action =
   | {
       /** Url of the endpoint without the base entity */
@@ -20,7 +25,9 @@ export type EntityConfig<Actions extends {} = {}, Adapter extends {} = {}> = {
 
   /** Configure endpoints or methods */
   actions: {
-    [Property in keyof Actions]: Actions[Property] & Action;
+    [Property in keyof Actions]:
+      | (Actions[Property] & Action)
+      | ActionFunction<any, any, Omit<EntityReturn<Actions>, Property>>;
   };
 
   /** Adaptar to make requests */
