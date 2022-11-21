@@ -1,32 +1,28 @@
-import { EntityConfig, EntityReturn, ResolveAsyncRequestProps } from "./types";
-import { createPath } from "./utility";
+import { AbortActions, EntityActions, EntityConfig, EntityReturn } from "./types";
+import createPath from "./utility/createPath";
 import fetcher from "./utility/fetcher";
-
-const resolveAdapter = <T>(adapter: T | any) => {
-  const resolver = async <Params, Resolve = any>(
-    props: ResolveAsyncRequestProps<Params>
-  ): Promise<Resolve> => {
-    const { path, params, type } = props;
-    return adapter[type || "get"](path, params ?? {});
-  };
-  return resolver;
-};
+import resolveAdapter from "./utility/resolveAdapter";
 
 export default function createServiceEntity<Actions extends {}, Adapter extends {}>(
   config: EntityConfig<Actions, Adapter>
-) {
+): EntityReturn<Actions> {
   const { actions, entity, adapter, baseUrl } = config;
-  const finalActions = {} as EntityReturn<Actions>;
+  const finalActions = {} as EntityActions<Actions>;
+  const abort = {} as AbortActions<Actions>;
   const request = resolveAdapter(adapter);
 
   for (const actionName in actions) {
     const action = actions[actionName];
     const isActionFullPath = typeof action === "string";
+    const controller = new AbortController();
+
+    abort[actionName] = () => controller.abort();
+
     finalActions[actionName] = async (params = undefined) => {
       if (typeof action === "function") {
         const filterActions = { ...finalActions };
         delete filterActions[actionName];
-        return action({ actions: filterActions, params });
+        return action({ actions: { ...filterActions, abort }, params });
       }
 
       const path = createPath({
@@ -39,15 +35,19 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
       return new Promise(async (resolve, reject) => {
         try {
           const buildAdapterCallback = adapter ? request : fetcher;
+
           const response = await buildAdapterCallback({
             type: isActionFullPath ? "get" : action.type,
             path,
             params,
+            signal: controller.signal,
           });
+
           if (!isActionFullPath && action.resolve) {
             const resolver = action.resolve(response);
             resolve(resolver);
           }
+
           resolve(response);
         } catch (error) {
           reject(Error(error as string));
@@ -56,5 +56,8 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
     };
   }
 
-  return finalActions;
+  return {
+    ...finalActions,
+    abort,
+  };
 }

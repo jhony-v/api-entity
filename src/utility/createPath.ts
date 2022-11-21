@@ -4,7 +4,8 @@ type CreatePathProps<T> = {
   params?: T;
   baseUrl?: string;
 };
-export const createPath = <T>({
+
+const createPath = <T>({
   entity,
   params,
   baseUrl,
@@ -24,3 +25,5 @@ export const createPath = <T>({
   }
   return path;
 };
+
+export default createPath;

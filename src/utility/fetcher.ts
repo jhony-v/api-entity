@@ -1,16 +1,18 @@
 import { ResolveAsyncRequestProps } from "../types";
 
 export default function fetcher<Props>(props: ResolveAsyncRequestProps<Props>) {
-  const parseMethod = (props.type || "get").toUpperCase();
-  return fetch(props.path, {
+  const { type, signal, path, params } = props;
+  const parseMethod = (type || "get").toUpperCase();
+  return fetch(path, {
     method: parseMethod,
     headers: {
       "Content-Type": "application/json",
     },
-    ...(parseMethod !== "GET"
-      ? {
-          body: JSON.stringify(props.params),
-        }
-      : {}),
+    ...(signal && {
+      signal,
+    }),
+    ...(parseMethod !== "GET" && {
+      body: JSON.stringify(params),
+    }),
   }).then((response) => response.json());
 }
