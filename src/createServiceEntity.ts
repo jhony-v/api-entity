@@ -3,7 +3,7 @@ import createPath from "./utility/createPath";
 import fetcher from "./utility/fetcher";
 import resolveAdapter from "./utility/resolveAdapter";
 
-export default function createServiceEntity<Actions extends {}, Adapter extends {}>(
+export default function createServiceEntity<Actions extends {}, Adapter extends {} = {}>(
   config: EntityConfig<Actions, Adapter>
 ): EntityReturn<Actions> {
   const { actions, entity, adapter, baseUrl } = config;
@@ -18,6 +18,7 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
 
     abort[actionName] = () => controller.abort();
 
+    //@ts-ignore
     finalActions[actionName] = async (params = undefined) => {
       if (typeof action === "function") {
         const filterActions = { ...finalActions };

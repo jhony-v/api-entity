@@ -1,7 +1,10 @@
 export type ActionType = "get" | "post" | "patch" | "put" | "delete";
 
 type ActionFunction<Params extends {} = {}, Response extends {} = {}, Actions = {}> = (context: {
+  /** Access to the other actions inside the entity */
   actions: Actions;
+
+  /** Parameters that you can pass at the time it is invoked */
   params?: Params;
 }) => Promise<Response>;
 
@@ -25,7 +28,7 @@ export type EntityConfig<Actions extends {} = {}, Adapter extends {} = {}> = {
   actions: {
     [Property in keyof Actions]:
       | ((Actions[Property] & Action) | string)
-      | ActionFunction<any, any, Omit<EntityReturn<Actions>, Property>>;
+      | ActionFunction<{}, {}, Omit<EntityReturn<Actions>, Property>>;
   };
 
   /** Adaptar to make requests */
@@ -33,15 +36,24 @@ export type EntityConfig<Actions extends {} = {}, Adapter extends {} = {}> = {
 };
 
 export type AbortActions<Actions> = {
+  /** Functions to abort actions */
   [Property in keyof Actions]: () => void;
 };
 
 export type EntityActions<Actions> = {
-  [Property in keyof Actions]: <P, T = {}>(params?: P) => Promise<T>;
+  /**
+   * Return action with custom type definition passed as a prop
+   * Otherwise, return a default promise function
+   */
+  [Property in keyof Actions]: Actions[Property] extends (
+    value: infer Params
+  ) => Promise<infer Return>
+    ? (params?: Params) => Promise<Return>
+    : <Params, Response = {}>(params?: Params) => Promise<Response>;
 };
 
 export type EntityReturn<Actions> = EntityActions<Actions> & {
-  /** Property with an list of methods to abort each actions whether it'is necessary */
+  /** Property with an list of methods to abort each actions whether it's necessary */
   abort: AbortActions<Actions>;
 };
 
