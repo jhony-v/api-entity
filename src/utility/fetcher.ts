@@ -1,5 +1,9 @@
 import { ResolveAsyncRequestProps } from "../types";
 
+/**
+ * Default fetcher using Fetch API
+ */
+
 export default function fetcher<Props>(props: ResolveAsyncRequestProps<Props>) {
   const { type, signal, path, params } = props;
   const parseMethod = (type || "get").toUpperCase();
