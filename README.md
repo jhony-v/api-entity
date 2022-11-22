@@ -47,7 +47,7 @@ Using axios as an adapter or if you prefer another, you'll be able to do it.
 import axios from "axios";
 import { createServiceEntity } from "api-entity";
 
-// custom service with axios
+// Custom service with axios
 const placeholderService = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com",
 });
@@ -88,8 +88,13 @@ posts.byId({ id: 1 }).then(console.log);
 
 Name the base URL that will be attached to the action's path. Let's see some examples below.
 
-- `posts`: /posts, /posts/1 /posts/1/comments
-- `comments`: /comments, /comments/1
+- posts:
+  - `/posts`
+  - `/posts/1`
+  - `/posts/1/comments`
+- comments:
+  - `/comments`
+  - `/comments/top`
 
 ### baseUrl
 
@@ -134,11 +139,7 @@ const posts = createServiceEntity({
 const posts = createServiceEntity({
   actions: {
     all: {
-      path: "/",
-    },
-    update: {
-      path: "/:id",
-      type: "put",
+      path: "/", // You don't need to add the type "get", default it is
     },
     add: {
       path: "/",
@@ -146,7 +147,8 @@ const posts = createServiceEntity({
     },
     byIdComments: {
       path: "/:id:/comments",
-      resolve: (value) => value.data, // optional whether you want to manipulate the response and return a new data
+      // Optional whether you want to manipulate the response and return a new data
+      resolve: (value) => value.data,
     },
   },
 });
@@ -165,6 +167,33 @@ const posts = createServiceEntity({
         comments,
       };
     },
+  },
+});
+```
+
+### action utils
+
+Another alternative to avoid creating nested structures with the type and URL is using these functions.
+
+| action | type   |
+| ------ | ------ |
+| get    | GET    |
+| post   | POST   |
+| put    | PUT    |
+| patch  | PATCH  |
+| del    | DELETE |
+
+Here I'm using the example above by replacing the object configuration with helper functions.
+
+```ts
+import { put, post, get } from "api-entity";
+
+const posts = createServiceEntity({
+  actions: {
+    all: get("/"),
+    update: put("/:id"),
+    add: post("/"),
+    byIdComments: get("/:id:/comments", (value) => value.data),
   },
 });
 ```
