@@ -1,6 +1,10 @@
 export type ActionType = "get" | "post" | "patch" | "put" | "delete";
 
-type ActionFunction<Params extends {} = {}, Response extends {} = {}, Actions = {}> = (context: {
+export type ActionFunction<
+  Params extends {} = {},
+  Response extends {} = {},
+  Actions = {}
+> = (context: {
   /** Access to the other actions inside the entity */
   actions: Actions;
 

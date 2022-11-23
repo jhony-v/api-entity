@@ -1,4 +1,11 @@
-import { AbortActions, EntityActions, EntityConfig, EntityReturn } from "./types";
+import {
+  AbortActions,
+  Action,
+  ActionFunction,
+  EntityActions,
+  EntityConfig,
+  EntityReturn,
+} from "./types";
 import createPath from "./utility/createPath";
 import fetcher from "./utility/fetcher";
 import resolveAdapter from "./utility/resolveAdapter";
@@ -12,7 +19,7 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
   const request = resolveAdapter(adapter);
 
   for (const actionName in actions) {
-    const action = actions[actionName];
+    const action = actions[actionName] as Action | ActionFunction;
     const isActionFullPath = typeof action === "string";
     const controller = new AbortController();
 
