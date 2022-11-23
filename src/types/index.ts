@@ -27,7 +27,9 @@ export type EntityConfig<Actions extends {} = {}, Adapter extends {} = {}> = {
   /** Configure endpoints or methods */
   actions: {
     [Property in keyof Actions]:
-      | ((Actions[Property] & Action) | string)
+      | Action
+      | Actions[Property]
+      | string
       | ActionFunction<{}, {}, Omit<EntityReturn<Actions>, Property>>;
   };
 
