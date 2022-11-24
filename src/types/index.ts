@@ -32,11 +32,15 @@ export type EntityConfig<Actions extends {} = {}, Adapter extends {} = {}> = {
   actions: {
     [Property in keyof Actions]:
       | Action
-      | Actions[Property]
       | string
-      | ActionFunction<{}, {}, Omit<EntityReturn<Actions>, Property>>;
+      | ActionFunction<
+          Actions[Property] extends (params: infer Params) => Promise<unknown> ? Params & {} : {},
+          Actions[Property] extends (...args: any) => Promise<unknown>
+            ? Awaited<ReturnType<Actions[Property]>>
+            : {},
+          Omit<EntityReturn<Actions>, Property>
+        >;
   };
-
   /** Adaptar to make requests */
   adapter?: Adapter;
 };
