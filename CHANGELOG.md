@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/jhony-v/api-entity/compare/v1.3.1...v1.3.2) (2022-11-24)
+
+
+### Bug Fixes
+
+* support types in custom functions and on their args ([438174b](https://github.com/jhony-v/api-entity/commit/438174b9474593500750ae94fe3ed7ae786b9dd3))
+
 ### [1.3.1](https://github.com/jhony-v/api-entity/compare/v1.3.0...v1.3.1) (2022-11-23)
 
 
