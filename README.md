@@ -133,7 +133,7 @@ const posts = createServiceEntity({
 });
 ```
 
-2. Using an object configurable
+2. Using an object customizable
 
 ```ts
 const posts = createServiceEntity({
@@ -169,6 +169,26 @@ const posts = createServiceEntity({
     },
   },
 });
+```
+
+### abort
+
+If you desire to abort some actions for some reason, executing them is pretty straightforward.
+
+To revoke a request, you have the property "abort", followed by the method's name.
+
+```ts
+const posts = createServiceEntity({
+  actions: {
+    all: "/",
+    byId: "/:id",
+  },
+});
+
+posts.all().then(console.log);
+posts.abort.all(); // abort request of "all" method
+posts.byId({ id: 1 }).then(console.log);
+posts.abort.byId(); // abort request of "byId" method
 ```
 
 ### action utils
@@ -224,7 +244,7 @@ interface PostService {
 const posts = createServiceEntity<PostService>({
   actions: {
     all: get("/"),
-    byId: byId("/:id"),
+    byId: get("/:id"),
     update: put("/:id"),
     add: post("/"),
   },
