@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/jhony-v/api-entity/compare/v1.3.2...v1.4.0) (2022-11-25)
+
+
+### Features
+
+* configure multiple entities in one entry point ([123d658](https://github.com/jhony-v/api-entity/commit/123d65824734097de648a35c58a5f44b8b805bc2))
+
 ### [1.3.2](https://github.com/jhony-v/api-entity/compare/v1.3.1...v1.3.2) (2022-11-24)
 
 
