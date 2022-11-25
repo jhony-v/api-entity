@@ -250,3 +250,5 @@ const posts = createServiceEntity<PostService>({
   },
 });
 ```
+
+[View a full example here 👈](https://codesandbox.io/s/api-entity-example-6twbrv)
