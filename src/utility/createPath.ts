@@ -1,5 +1,5 @@
 export type CreatePathProps<T> = {
-  entity: string;
+  entity?: string;
   path: string;
   params?: T;
   baseUrl?: string;

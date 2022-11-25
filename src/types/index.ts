@@ -1,5 +1,16 @@
 export type ActionType = "get" | "post" | "patch" | "put" | "delete";
 
+export type EntityBaseConfig<Adapter = {}> = {
+  /** Base path for a entity */
+  entity?: string;
+
+  /** Base http domain */
+  baseUrl?: string;
+
+  /** Adapter to make requests */
+  adapter?: Adapter;
+};
+
 export type ActionFunction<
   Params extends {} = {},
   Response extends {} = {},
@@ -24,10 +35,6 @@ export type Action = {
 };
 
 export type EntityConfig<Actions extends {} = {}, Adapter extends {} = {}> = {
-  /** Base path for a entity */
-  entity: string;
-  baseUrl?: string;
-
   /** Configure endpoints or methods */
   actions: {
     [Property in keyof Actions]:
@@ -41,9 +48,7 @@ export type EntityConfig<Actions extends {} = {}, Adapter extends {} = {}> = {
           Omit<EntityReturn<Actions>, Property>
         >;
   };
-  /** Adaptar to make requests */
-  adapter?: Adapter;
-};
+} & EntityBaseConfig<Adapter>;
 
 export type AbortActions<Actions> = {
   /** Functions to abort actions */
@@ -62,10 +67,19 @@ export type EntityActions<Actions> = {
     : <Params, Response = {}>(params?: Params) => Promise<Response>;
 };
 
-export type EntityReturn<Actions> = EntityActions<Actions> & {
-  /** Property with an list of methods to abort each actions whether it's necessary */
-  abort: AbortActions<Actions>;
-};
+export type EntityReturn<Actions> = EntityActions<Actions> &
+  EntityBaseConfig & {
+    /** Property with an list of methods to abort each actions whether it's necessary */
+    abort: AbortActions<Actions>;
+
+    /** initialize actions */
+    setupActions(): EntityActions<Actions>;
+
+    /** Personalize configuration of actions and other properties of initial config */
+    configure(customConfig: CustomEntityConfig<{}>): void;
+  };
+
+export type CustomEntityConfig<Actions> = EntityBaseConfig<Actions>;
 
 export type ResolveAsyncRequestProps<Params> = {
   /** Url of the endpoint */
@@ -79,4 +93,19 @@ export type ResolveAsyncRequestProps<Params> = {
 
   /** Binding AbortController */
   signal: AbortSignal;
+};
+
+export type ConfigServicesEntity<Entities, Adapter> = {
+  /** Object of "EntityConfig" */
+  entities: Entities;
+
+  /** Adapter to make requests */
+  adapter?: Adapter;
+
+  /** Base http domain */
+  baseUrl?: string;
+};
+
+export type ReturnConfigServices<Entities> = {
+  [Property in keyof Entities]: Omit<Entities[Property], "setupActions" | "configure" | "adapter">;
 };
