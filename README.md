@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/static/img/entity.png" width="300" />
+</p>
+
 # api-entity
 
 Create service entities according to your API agnostic to the framework you are using.
