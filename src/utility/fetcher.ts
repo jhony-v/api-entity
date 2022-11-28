@@ -12,9 +12,7 @@ export default function fetcher<Props>(props: ResolveAsyncRequestProps<Props>) {
     headers: {
       "Content-Type": "application/json",
     },
-    ...(signal && {
-      signal,
-    }),
+    signal,
     ...(parseMethod !== "GET" && {
       body: JSON.stringify(params),
     }),

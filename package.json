@@ -23,12 +23,17 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prepack": "pnpm unbuild",
-    "release": "pnpm lint && standard-version && git push --follow-tags && pnpm publish"
+    "release": "pnpm lint && standard-version && git push --follow-tags && pnpm publish",
+    "docs:start": "cd docs && pnpm start",
+    "docs:build": "cd docs && pnpm build"
   },
   "keywords": [
     "axios",
     "fetch",
     "agnostic",
+    "ajax",
+    "http",
+    "promise",
     "model",
     "api",
     "entity",
@@ -39,8 +44,13 @@
     "url": "https://github.com/jhony-v"
   },
   "repository": {
+    "type": "git",
     "url": "https://github.com/jhony-v/api-entity"
   },
+  "bugs": {
+    "url": "https://github.com/jhony-v/api-entity/issues"
+  },
+  "homepage": "https://github.com/jhony-v/api-entity",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.2.3",

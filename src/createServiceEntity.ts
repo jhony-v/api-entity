@@ -7,6 +7,7 @@ import {
   EntityConfig,
   EntityReturn,
 } from "./types";
+import createAbortController from "./utility/createAbortController";
 import createPath from "./utility/createPath";
 import fetcher from "./utility/fetcher";
 import resolveAdapter from "./utility/resolveAdapter";
@@ -36,7 +37,7 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
     for (const actionName in actions) {
       const action = actions[actionName] as Action | ActionFunction;
       const isActionFullPath = typeof action === "string";
-      const controller = new AbortController();
+      const controller = createAbortController();
 
       abort[actionName] = () => controller.abort();
 
@@ -63,7 +64,9 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
               type: isActionFullPath ? "get" : action.type,
               path,
               params,
-              signal: controller.signal,
+              ...(controller.signal && {
+                signal: controller.signal,
+              }),
             });
 
             if (!isActionFullPath && action.resolve) {
@@ -73,7 +76,7 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
 
             resolve(response);
           } catch (error) {
-            reject(Error(error as string));
+            reject(new Error(error as string));
           }
         });
       };

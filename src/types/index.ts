@@ -92,7 +92,7 @@ export type ResolveAsyncRequestProps<Params> = {
   params?: Params;
 
   /** Binding AbortController */
-  signal: AbortSignal;
+  signal?: AbortSignal;
 };
 
 export type ConfigServicesEntity<Entities, Adapter> = {
