@@ -1,5 +1,7 @@
 import { ResolveAsyncRequestProps } from "../types";
 
+const isFormData = (params: any) => typeof params.__proto__.append !== "undefined";
+
 /**
  * Default fetcher using Fetch API
  */
@@ -14,7 +16,7 @@ export default function fetcher<Props>(props: ResolveAsyncRequestProps<Props>) {
     },
     signal,
     ...(parseMethod !== "GET" && {
-      body: JSON.stringify(params),
+      body: isFormData(params) ? (params as FormData) : JSON.stringify(params || "{}"),
     }),
   }).then((response) => response.json());
 }
