@@ -1,6 +1,6 @@
 {
   "name": "api-entity",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Create service entities according to your API agnostic to the framework you are using",
   "sideEffects": false,
   "type": "module",
@@ -23,7 +23,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prepack": "pnpm unbuild",
-    "release": "pnpm lint && standard-version && git push --follow-tags && pnpm publish",
+    "release": "standard-version && git push --follow-tags && pnpm publish",
     "docs:start": "cd docs && pnpm start",
     "docs:build": "cd docs && pnpm build",
     "docs:deploy": "cd docs && pnpm run deploy"

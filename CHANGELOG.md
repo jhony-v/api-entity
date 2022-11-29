@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/jhony-v/api-entity/compare/v1.4.0...v1.4.1) (2022-11-29)
+
+
+### Bug Fixes
+
+* allow sending FormData object ([76fedec](https://github.com/jhony-v/api-entity/commit/76fedecc84e4547b5d4ef5434cb3eecba3ae5a53))
+
 ## [1.4.0](https://github.com/jhony-v/api-entity/compare/v1.3.2...v1.4.0) (2022-11-25)
 
 
