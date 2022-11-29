@@ -6,13 +6,13 @@ const packageJson = require("../package.json");
 const config = {
   title: packageJson.name,
   tagline: packageJson.description,
-  url: "https://your-docusaurus-test-site.com",
+  url: `https://${packageJson.author.name}.github.io`,
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "Github",
-  projectName: packageJson.name,
+  organizationName: packageJson.author.name,
+  projectName: `${packageJson.author.name}.github.io`,
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -35,6 +35,11 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      docs: {
+        sidebar: {
+          hideable: true,
+        },
+      },
       navbar: {
         title: packageJson.name,
         logo: {

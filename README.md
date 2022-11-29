@@ -132,7 +132,7 @@ const posts = createServiceEntity({
     all: "/",
     byId: "/:id",
     summary: "/summary",
-    byIdComments: "/:id:/comments",
+    byIdComments: "/:id/comments",
   },
 });
 ```
@@ -150,7 +150,7 @@ const posts = createServiceEntity({
       type: "post",
     },
     byIdComments: {
-      path: "/:id:/comments",
+      path: "/:id/comments",
       // Optional whether you want to manipulate the response and return a new data
       resolve: (value) => value.data,
     },
@@ -217,7 +217,7 @@ const posts = createServiceEntity({
     all: get("/"),
     update: put("/:id"),
     add: post("/"),
-    byIdComments: get("/:id:/comments", (value) => value.data),
+    byIdComments: get("/:id/comments", (value) => value.data),
   },
 });
 ```

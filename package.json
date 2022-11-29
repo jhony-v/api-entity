@@ -25,7 +25,8 @@
     "prepack": "pnpm unbuild",
     "release": "pnpm lint && standard-version && git push --follow-tags && pnpm publish",
     "docs:start": "cd docs && pnpm start",
-    "docs:build": "cd docs && pnpm build"
+    "docs:build": "cd docs && pnpm build",
+    "docs:deploy": "cd docs && pnpm deploy"
   },
   "keywords": [
     "axios",
