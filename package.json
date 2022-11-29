@@ -51,7 +51,7 @@
   "bugs": {
     "url": "https://github.com/jhony-v/api-entity/issues"
   },
-  "homepage": "https://github.com/jhony-v/api-entity",
+  "homepage": "https://jhony-v.github.io/api-entity/",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.2.3",

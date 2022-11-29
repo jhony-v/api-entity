@@ -4,13 +4,21 @@
 
 # api-entity
 
-Create service entities according to your API agnostic to the framework you are using.
+Create service entities according to your API agnostic to the framework you are using **[full documentation](https://jhony-v.github.io/api-entity/).**
 
 ## Problem
 
 Nowadays, our FrontEnd applications use countless endpoints, despite dividing them into multiple layers or entities, but there is still a problem because of the quantity of boilerplate we need to write, bind the URL, create methods, pass parameters, and so on. Therefore, the following implementation mostly removes these problems through an intuitive API.
 
 ## Usage
+
+### Installation
+
+Use the following command line to add this dependency in your app.
+
+```console
+yarn add api-entity
+```
 
 ### Native request
 
