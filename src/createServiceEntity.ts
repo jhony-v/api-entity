@@ -25,7 +25,7 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
     if (customConfig.adapter) {
       config.adapter = customConfig.adapter;
     }
-    if (!config.entity) {
+    if (config.entity === null || config.entity === undefined) {
       config.entity = customConfig.entity;
     }
   }
@@ -84,7 +84,7 @@ export default function createServiceEntity<Actions extends {}, Adapter extends 
     return finalActions;
   }
 
-  if (config.entity && (config.baseUrl || config.adapter)) {
+  if (config.baseUrl || config.adapter) {
     setupActions();
   }
 
