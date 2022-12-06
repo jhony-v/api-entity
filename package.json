@@ -1,6 +1,6 @@
 {
   "name": "api-entity",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Create service entities according to your API agnostic to the framework you are using",
   "sideEffects": false,
   "type": "module",
