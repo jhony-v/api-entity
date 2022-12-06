@@ -11,7 +11,7 @@ const createPath = <T>({
   baseUrl,
   path: inputPath,
 }: CreatePathProps<T>): string => {
-  let path = `/${entity}${inputPath}`;
+  let path = `/${entity || ""}${inputPath}`;
   const existsParams = params && Object.keys(params).length !== 0;
   if (existsParams) {
     const matches = path.match(/:\w+/gi) || [];

@@ -26,6 +26,13 @@ const expectations: Expectation[] = [
   },
   {
     input: {
+      path: "posts/top",
+      baseUrl,
+    },
+    url: `${baseUrl}/posts/top`,
+  },
+  {
+    input: {
       entity: "posts",
       path: "",
       baseUrl,
